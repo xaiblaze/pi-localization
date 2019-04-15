@@ -46,9 +46,16 @@ err = bluez.hci_le_set_scan_enable(
 )
 
 while True:
+    #sys.stdout.flush()
+    #os.system('clear')
+
     data = sock.recv(1024)
     # print bluetooth address from LE Advert. packet
     addr = ':'.join("{0:02x}".format(ord(x)) for x in data[12:6:-1])
     rssi = (ord(data[-1]))
-    if(iBeacon_addr.lower() == addr): print(iBeacon_addr, rssi)
-   
+    dist = beacon.distance(rssi)
+    if(iBeacon_addr.lower() == addr):
+	os.system('clear')
+	beacon.write_to_file(addr,dist)
+        print iBeacon_addr, dist
+
