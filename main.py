@@ -13,8 +13,11 @@ from socket import (
 )
 
 import beacon
+from .dataLogger.dataLogger import my_logger
 
+#changes here
 iBeacon_addr = beacon.collect_MAC()
+logger = my_logger.MyLogger(host='http://egorv1.herokuapp.com/api/logging/')
 
 btlib = find_library("bluetooth")
 bluez = CDLL(btlib, use_errno=True)
@@ -41,8 +44,8 @@ sock.setsockopt(SOL_HCI, HCI_FILTER, hci_filter)
 err = bluez.hci_le_set_scan_enable(
     sock.fileno(),
     1,  # 1 - turn on;  0 - turn off
-    0, # 0-filtering disabled, 1-filter out duplicates
-    1000  # timeout
+    0, 	# 0-filtering disabled, 1-filter out duplicates
+    30	# timeout
 )
 
 while True:
@@ -57,5 +60,9 @@ while True:
     if(iBeacon_addr.lower() == addr):
 	os.system('clear')
 	beacon.write_to_file(addr,dist)
+	
+	#sets current distance and sends json packet
+	logger.set_distance(dist)
+	logger.send()
         print iBeacon_addr, dist
 
