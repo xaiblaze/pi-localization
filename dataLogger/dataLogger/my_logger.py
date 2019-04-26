@@ -4,7 +4,7 @@ import requests
 class MyLogger:
     def __init__ (self, host='http://egorv1.herokuapp.com/api/logging/'):
         self.host = host
-        self.distance = 0
+        self.distance = -1  #initial value
 
     def date(self):
         return datetime.date.today()
