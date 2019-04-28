@@ -2,7 +2,7 @@ import datetime
 import requests
 
 class MyLogger:
-    def __init__ (self, host='http://egorv1.herokuapp.com/api/logging/'):
+    def __init__ (self, host='https://ece813.herokuapp.com/api/logging/'):
         self.host = host
         self.distance = -1  #initial value
 
@@ -18,7 +18,7 @@ class MyLogger:
     def get_distance(self):
         return self.distance
 
-    def send(self, packet):
+    def send(self, packet=None):
         json = {
             'packet'  : str(packet),
             'date'    : str(self.date()),

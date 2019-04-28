@@ -17,7 +17,7 @@ from .dataLogger.dataLogger import my_logger
 
 #changes here
 iBeacon_addr = beacon.collect_MAC()
-logger = my_logger.MyLogger(host='http://egorv1.herokuapp.com/api/logging/')
+logger = my_logger.MyLogger()
 
 btlib = find_library("bluetooth")
 bluez = CDLL(btlib, use_errno=True)
